@@ -9,12 +9,12 @@ import Modal from '~/components/base/Modal'
 const TWITTER_HANDLE = 'marcelc63'
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`
 const OPENSEA_LINK = 'https://testnets.opensea.io/collection/onchainhero'
-const TOTAL_MINT_COUNT = 50
 const CONTRACT_ADDRESS = '0x9EeF8888740933DaEfFD672CccbbB008ae51b6DB'
 
 export default function Home() {
   const [currentAccount, setCurrentAccount] = useState('')
   const [minting, setMinting] = useState(false)
+  const [succeed, setSucceed] = useState<any>(undefined)
 
   const checkIfWalletIsConnected = async () => {
     const { ethereum }: any = window
@@ -76,8 +76,11 @@ export default function Home() {
 
         connectedContract.on('NewEpicNFTMinted', (from, tokenId) => {
           console.log(from, tokenId.toNumber())
-          alert(
-            `Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take a max of 10 min to show up on OpenSea. Here's the link: https://testnets.opensea.io/assets/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`
+          // alert(
+          //   `Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take a max of 10 min to show up on OpenSea. Here's the link: https://testnets.opensea.io/assets/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`
+          // )
+          setSucceed(
+            `https://testnets.opensea.io/assets/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`
           )
         })
 
@@ -147,7 +150,7 @@ export default function Home() {
   )
 
   const openSeaLink = () => (
-    <a href={OPENSEA_LINK}>
+    <a href={OPENSEA_LINK} target="_blank">
       <button className="font-bold button-comic text-xl border-4 border-purple-500 p-4 rounded-xl bg-white mb-4 text-purple-500 hover:bg-purple-100">
         See OpenSea Collection
       </button>
@@ -192,6 +195,26 @@ export default function Home() {
         <p className="text-center text-4xl animate-bounce font-brush text-purple-500">
           Printing Your Hero License... 🦸
         </p>
+      </Modal>
+      <Modal open={succeed} close={() => setSucceed(undefined)}>
+        {succeed && (
+          <div className="w-full flex flex-col items-center">
+            <p className="text-center text-4xl mb-4 font-brush text-purple-500">
+              Your Super Hero License is Ready!
+            </p>
+            <a href={succeed}>
+              <button className="font-bold button-comic text-xl border-4 border-purple-500 p-4 rounded-xl bg-white mb-4 text-purple-500 hover:bg-purple-100">
+                Click To View!
+              </button>
+            </a>
+            <p className="text-center text-gray-400">
+              or visit the link:{' '}
+              <a href={succeed} target="_blank" className="break-all underline">
+                {succeed}
+              </a>
+            </p>
+          </div>
+        )}
       </Modal>
     </div>
   )
