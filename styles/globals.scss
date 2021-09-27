@@ -2,8 +2,9 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background: #222222;
 }
 
 a {
@@ -13,4 +14,18 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.bg-img {
+  background: url('/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.font-brush {
+  font-family: 'Caveat Brush', cursive;
+}
+
+.button-comic {
+  box-shadow: 5px 5px 0 0 rgb(139, 92, 246);
 }

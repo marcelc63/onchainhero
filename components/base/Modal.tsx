@@ -6,7 +6,7 @@ import { XCircleIcon } from '@heroicons/react/solid'
 interface IModal {
   title?: string
   open: boolean
-  close: any
+  close?: any
 }
 
 const Modal: React.FC<IModal> = ({ open, close, title, children }) => {
@@ -16,7 +16,7 @@ const Modal: React.FC<IModal> = ({ open, close, title, children }) => {
         className={styles['modal-wrapper']}
         onClick={(event) => {
           event.preventDefault()
-          if (event.target === event.currentTarget) {
+          if (event.target === event.currentTarget && close) {
             close()
           }
         }}
@@ -28,10 +28,12 @@ const Modal: React.FC<IModal> = ({ open, close, title, children }) => {
             </div>
           )}
           {children}
-          <XCircleIcon
-            className="h-5 w-5 text-gray-500 cursor-pointer hover:text-gray-400 absolute top-2 right-2"
-            onClick={close}
-          />
+          {close && (
+            <XCircleIcon
+              className="h-5 w-5 text-gray-500 cursor-pointer hover:text-gray-400 absolute top-2 right-2"
+              onClick={close}
+            />
+          )}
         </div>
       </div>
     </div>

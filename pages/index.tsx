@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import artifact from '~/assets/OnChainHero.json'
 import { ethers } from 'ethers'
 
+import Modal from '~/components/base/Modal'
+
 // Constants
 const TWITTER_HANDLE = 'marcelc63'
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`
@@ -12,6 +14,7 @@ const CONTRACT_ADDRESS = '0x9EeF8888740933DaEfFD672CccbbB008ae51b6DB'
 
 export default function Home() {
   const [currentAccount, setCurrentAccount] = useState('')
+  const [minting, setMinting] = useState(false)
 
   const checkIfWalletIsConnected = async () => {
     const { ethereum }: any = window
@@ -103,8 +106,12 @@ export default function Home() {
         console.log('Going to pop wallet now to pay gas...')
         let nftTxn = await connectedContract.makeAnEpicNFT()
 
+        setMinting(true)
+
         console.log('Mining...please wait.')
         await nftTxn.wait()
+
+        setMinting(false)
 
         console.log(
           `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`
@@ -124,7 +131,7 @@ export default function Home() {
   const renderNotConnectedContainer = () => (
     <button
       onClick={connectWallet}
-      className="bg-gradient-to-br from-purple-500 to-blue-500 p-2 rounded text-white mb-4"
+      className="font-bold button-comic text-xl border-4 border-purple-500 p-4 rounded-xl bg-white mb-4 text-purple-500 hover:bg-purple-100"
     >
       Connect to Wallet
     </button>
@@ -133,7 +140,7 @@ export default function Home() {
   const renderMintUI = () => (
     <button
       onClick={askContractToMintNft}
-      className="bg-gradient-to-br from-purple-500 to-blue-500 p-2 rounded text-white mb-4"
+      className="font-bold button-comic text-xl border-4 border-purple-500 p-4 rounded-xl bg-white mb-4 text-purple-500 hover:bg-purple-100"
     >
       Mint NFT
     </button>
@@ -141,16 +148,16 @@ export default function Home() {
 
   const openSeaLink = () => (
     <a href={OPENSEA_LINK}>
-      <button className="bg-gradient-to-br from-purple-500 to-blue-500 p-2 rounded text-white mb-8">
+      <button className="font-bold button-comic text-xl border-4 border-purple-500 p-4 rounded-xl bg-white mb-4 text-purple-500 hover:bg-purple-100">
         See OpenSea Collection
       </button>
     </a>
   )
 
   return (
-    <div className="w-full min-h-screen bg-gray-800 flex flex-col items-center p-4">
-      <div className="pt-10 flex flex-col items-center">
-        <p className="text-4xl text-white font-bold text-center mb-2">
+    <div className="w-full min-h-screen bg-img flex flex-col items-center justify-center p-4">
+      <div className="pt-10 md:pt-0 flex flex-col items-center">
+        <p className="text-8xl text-white font-bold text-center mb-2 font-brush">
           OnChainHero
         </p>
         <p className="text-2xl text-white font-bold text-center mb-8">
@@ -161,13 +168,31 @@ export default function Home() {
       </div>
       <div className="flex flex-row items-center">
         <img alt="Twitter Logo" className="w-10" src="/twitter-logo.svg" />
-        <a
-          className="text-white"
-          href={TWITTER_LINK}
-          target="_blank"
-          rel="noreferrer"
-        >{`built by @${TWITTER_HANDLE} on @_buildspace`}</a>
+        <p className="text-white">
+          built by{' '}
+          <a
+            className="text-white underline"
+            href={TWITTER_LINK}
+            target="_blank"
+            rel="noreferrer"
+          >{`@${TWITTER_HANDLE}`}</a>{' '}
+          as a{' '}
+          <a
+            className="text-white underline"
+            href={TWITTER_LINK}
+            target="_blank"
+            rel="noreferrer"
+          >
+            @_buildspace
+          </a>{' '}
+          final project
+        </p>
       </div>
+      <Modal open={minting}>
+        <p className="text-center text-4xl animate-bounce font-brush text-purple-500">
+          Printing Your Hero License... 🦸
+        </p>
+      </Modal>
     </div>
   )
 }
