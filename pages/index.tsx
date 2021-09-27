@@ -156,8 +156,8 @@ export default function Home() {
 
   return (
     <div className="w-full min-h-screen bg-img flex flex-col items-center justify-center p-4">
-      <div className="pt-10 md:pt-0 flex flex-col items-center">
-        <p className="text-8xl text-white font-bold text-center mb-2 font-brush">
+      <div className="flex flex-col items-center">
+        <p className="text-6xl md:text-8xl text-white font-bold text-center mb-2 font-brush">
           OnChainHero
         </p>
         <p className="text-2xl text-white font-bold text-center mb-8">
