@@ -204,7 +204,7 @@ export default function Home() {
           as a{' '}
           <a
             className="text-white underline"
-            href={TWITTER_LINK}
+            href="https://twitter.com/_buildspace"
             target="_blank"
             rel="noreferrer"
           >
