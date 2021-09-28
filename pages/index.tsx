@@ -15,6 +15,7 @@ export default function Home() {
   const [currentAccount, setCurrentAccount] = useState('')
   const [minting, setMinting] = useState(false)
   const [succeed, setSucceed] = useState<any>(undefined)
+  const [network, setNetwork] = useState(0)
 
   const checkIfWalletIsConnected = async () => {
     const { ethereum }: any = window
@@ -24,6 +25,7 @@ export default function Home() {
       return
     } else {
       console.log('We have the ethereum object', ethereum)
+      await checkNetwork()
     }
 
     const accounts = await ethereum.request({ method: 'eth_accounts' })
@@ -55,6 +57,19 @@ export default function Home() {
 
       console.log('Connected', accounts[0])
       setCurrentAccount(accounts[0])
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const checkNetwork = async () => {
+    try {
+      const { ethereum }: any = window
+      if (ethereum) {
+        setNetwork(parseInt(ethereum.networkVersion))
+      } else {
+        console.log("Ethereum object doesn't exist!")
+      }
     } catch (error) {
       console.log(error)
     }
@@ -163,9 +178,16 @@ export default function Home() {
         <p className="text-6xl md:text-8xl text-white font-bold text-center mb-2 font-brush">
           OnChainHero
         </p>
-        <p className="text-2xl text-white font-bold text-center mb-8">
+        <p className="text-2xl text-white font-bold text-center mb-4">
           Get your Super Hero License Today!
         </p>
+        {currentAccount !== '' && (
+          <p className="text-lg text-white text-center mb-8">
+            {network === 4
+              ? `You're on the Rinkeby Network`
+              : `Please switch to the Rinkeby Network and refresh page`}
+          </p>
+        )}
         {currentAccount === '' ? renderNotConnectedContainer() : renderMintUI()}
         {openSeaLink()}
       </div>
