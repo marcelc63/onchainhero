@@ -36,9 +36,10 @@ const MyApp: React.FC<AppProps> = (props: AppProps) => {
         <script
           dangerouslySetInnerHTML={{
             __html: `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'UA-47867706-3', { page_path: window.location.pathname });`,
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LCVJMC05DE');`,
           }}
         ></script>
       </Head>
